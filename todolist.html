@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <style>
+        #vm {
+            position: absolute;
+            width: 600px;
+            height: auto;
+            line-height: auto;
+            border: 1px solid #d7d7d7;
+            border-radius: 5px;
+            padding-top: 10px;
+            padding-left: 30px;
+            padding-bottom: 54px;
+            padding-right: 30px;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+            font-size: 13px;
+            box-shadow: -1px -1px 1px rgb(231, 230, 230)
+        }
+
+        a {
+            float: right
+        }
+
+        #lef {
+            position: relative;
+            float: right;
+            right: 24px;
+            color: rgb(189, 170, 139)
+        }
+
+        a:hover {
+            color: red
+        }
+
+        #hreflist {
+            position: absolute;
+            right: 15px;
+            color: #333;
+            text-decoration: none;
+            color: red
+        }
+
+        #lab {
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            height: 32px;
+            line-height: 32px;
+            font-size: 18px;
+            color: rgb(238, 141, 14)
+        }
+
+        #inpId {
+            position: absolute;
+            top: 15px;
+            left: 110px;
+            width: 510px;
+            height: 32px;
+            border: 1px solid #d7d7d7;
+            border-radius: 5px;
+            padding-left: 10px
+        }
+
+        .inpId {
+            border: 1px solid #4f2de7 !important;
+        }
+
+        .inp1 {
+            position: relative;
+            top: -2px;
+            height: 34px;
+            line-height: 32px;
+            width: 500px;
+            border: none;
+            outline: none;
+            background: none;
+            color: #666;
+            size: 18px
+        }
+
+        #list {
+            position: relative;
+            top: 49px
+        }
+
+        #p1 {
+            position: relative;
+            top: 54px
+        }
+
+        input::placeholder {
+            color: rgb(187, 186, 186)
+        }
+
+        li {
+            position: relative;
+            list-style: none;
+            left: -55px;
+            width: 582px;
+            font-size: 14px;
+            line-height: 20px;
+            background: #f2f2f2;
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            margin: 10px;
+            border-radius: 3px
+        }
+
+        .inLi {
+            background: rgb(202, 200, 200);
+            color: rgb(252, 247, 251)
+        }
+
+        #sp1 {
+            color: rgb(238, 141, 14)
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vm">
+        <label id="lab"><strong>今日待办</strong></label>
+        <div id="inpId" :class="StyleSheet.change">
+            <input type="text" class="inp1" placeholder="输入待办事项再按回车" v-model="item" @keyup.enter="addMenu"
+                @focus="setFocus" @blur="setblur">
+        </div>
+        <div id="list" v-for="(list, index) in menus">
+            <ul>
+                <li @mouseover="setIsShow(index)" @mouseout="setIsHide(index)" :class="{'inLi': currentIndex == index}"
+                    :data-index="index">
+                    <b id="listB">{{ list.list }}</b><span id="lef">{{ list.timer }}</span><a href="javascript:"
+                        id="hreflist" v-show="currentIndex == index" title="清除" @click="deleteItem(index)"><b>✕</b></a>
+                </li>
+            </ul>
+        </div>
+        <p id="p1" v-if="menus.length != 0">今日还剩 <b><span id="sp1">{{ menus.length }}</span></b>
+            个待办事项
+            <!-- ，<label style="opacity: 0.5;">总共已完成<b style="color: red;"> 5 </b>个事项</span></label> --> <a
+                href="javascript:" @click="deleteAllItem">一键清除</a></p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#vm',
+            data: {
+                menus: [{
+                        'list': '优视盾客户端1.0版本测试，提交测试报告给相关测试人员',
+                        'timer': '08-24'
+                    },
+                    {
+                        'list': '综治V1.1.4版本需求管理',
+                        'timer': '08-24'
+                    },
+                    {
+                        'list': '前端vue开发学习',
+                        'timer': '08-23'
+                    },
+                    {
+                        'list': '查阅智慧校园相关项目方案资料，参加讨论会议',
+                        'timer': '08-22'
+                    }
+                ],
+                item: '',
+                isShow: false,
+                StyleSheet: {
+                    show: '',
+                    change: ''
+                },
+                num: '',
+                currentIndex: null
+            },
+            methods: {
+                setIsShow: function (index) {
+                    this.currentIndex = index;
+                },
+                setIsHide: function (index) {
+                    this.currentIndex = null;
+                },
+                setFocus: function () {
+                    this.StyleSheet.change = 'inpId'
+                },
+                setblur: function () {
+                    this.StyleSheet.change = ''
+                },
+                addMenu: function () {
+                    let currentTime = new Date();
+                    let month = currentTime.getMonth() + 1;
+                    month = month < 10 ? '0' + month : month;
+                    let date = currentTime.getDate();
+                    date = date < 10 ? '0' + date : date;
+                    if (this.item !== '') {
+                        this.menus.unshift({
+                            'list': this.item,
+                            'timer': month + '-' + date
+                        });
+                        this.item = "";
+                        document.querySelector('.inp1').blur()
+                    }
+                },
+                deleteAllItem: function () {
+                    this.menus = []
+                },
+                deleteItem: function (index) {
+                    this.menus.splice(index, 1);
+                }
+                // lengthLimit: function () {
+                //     let text = document.querySelector('#listB').innerHTML;
+                //     text.length > 5 ? text.slice(0, 4) + '...' : text
+                // },
+            }
+            // mounted() {
+            //     localStorage.setItem('menus', JSON.stringify(this.menus))
+            //     console.log("menus", JSON.parse(localStorage.getItem('menus')))
+            // }
+        });
+    </script>
+</body>
+
+</html>
