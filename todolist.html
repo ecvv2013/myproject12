@@ -206,6 +206,7 @@
                             'list': this.item,
                             'timer': month + '-' + date
                         });
+                        localStorage.setItem('toDoList', JSON.stringify(this.menus));
                         this.item = "";
                         document.querySelector('.inp1').blur()
                     }
@@ -216,15 +217,11 @@
                 deleteItem: function (index) {
                     this.menus.splice(index, 1);
                 }
-                // lengthLimit: function () {
-                //     let text = document.querySelector('#listB').innerHTML;
-                //     text.length > 5 ? text.slice(0, 4) + '...' : text
-                // },
+            },
+            mounted() {
+                localStorage.setItem('toDoList', JSON.stringify(this.menus));
+                this.menus = JSON.parse(localStorage.getItem('toDoList'));
             }
-            // mounted() {
-            //     localStorage.setItem('menus', JSON.stringify(this.menus))
-            //     console.log("menus", JSON.parse(localStorage.getItem('menus')))
-            // }
         });
     </script>
 </body>
