@@ -128,6 +128,13 @@
         #sp1 {
             color: rgb(238, 141, 14)
         }
+
+        footer {
+            position: relative;
+            text-align: center;
+            top: 40px;
+            color: rgb(145, 148, 158);
+        }
     </style>
 </head>
 
@@ -152,27 +159,12 @@
             <!-- ，<label style="opacity: 0.5;">总共已完成<b style="color: red;"> 5 </b>个事项</span></label> --> <a
                 href="javascript:" @click="deleteAllItem">一键清除</a></p>
     </div>
+    <footer>当前版本V1.0</footer>
     <script>
         var vm = new Vue({
             el: '#vm',
             data: {
-                menus: [{
-                        'list': '优视盾客户端1.0版本测试，提交测试报告给相关测试人员',
-                        'timer': '08-24'
-                    },
-                    {
-                        'list': '综治V1.1.4版本需求管理',
-                        'timer': '08-24'
-                    },
-                    {
-                        'list': '前端vue开发学习',
-                        'timer': '08-23'
-                    },
-                    {
-                        'list': '查阅智慧校园相关项目方案资料，参加讨论会议',
-                        'timer': '08-22'
-                    }
-                ],
+                menus: [],
                 item: '',
                 isShow: false,
                 StyleSheet: {
@@ -212,15 +204,23 @@
                     }
                 },
                 deleteAllItem: function () {
-                    this.menus = []
+                    this.menus = [];
+                    localStorage.removeItem('toDoList');
                 },
                 deleteItem: function (index) {
                     this.menus.splice(index, 1);
+                    localStorage.setItem('toDoList', JSON.stringify(this.menus));
                 }
             },
             mounted() {
-                localStorage.setItem('toDoList', JSON.stringify(this.menus));
-                this.menus = JSON.parse(localStorage.getItem('toDoList'));
+                for (var i = 0; i < localStorage.length; i++) {
+                    if (localStorage.key(i).indexOf('toDoList') !== -1) {
+                        this.menus = JSON.parse(localStorage.getItem('toDoList'))
+                    } else {
+                        this.menus = [];
+                    }
+                }
+
             }
         });
     </script>
