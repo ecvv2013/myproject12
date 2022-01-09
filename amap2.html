@@ -1,0 +1,144 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@ecvv2013 
+ecvv2013
+/
+myprojects
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+myprojects
+/
+amap2.html
+in
+main
+ 
+
+Spaces
+
+1
+
+No wrap
+1
+•//AXURE-loading//
+2
+<!doctype html>
+3
+<html>
+4
+<head>
+5
+<meta charset="utf-8">
+6
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+7
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+8
+<title>自定义地图</title>
+9
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+10
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=7c7ea04aeabfb8eb84b57a2b7088f3aa"//我的KEY值，不含"//>
+11
+</script>
+12
+</head>
+13
+<body>
+14
+<div id="container"></div>
+15
+<script>
+16
+var map = new AMap.Map('container', {
+17
+resizeEnable: true,//左右上下可拖动//
+18
+zoom:16,//层级//
+19
+zooms:[14,20],//最高和最低层级//
+20
+center: [112.976271,28.196223],//中心坐标点//
+21
+pitch:60,//倾斜//
+22
+pitchEnable:false,//不可手动倾斜//
+23
+viewMode:'3D',//3D样式//
+24
+rotation:35,//旋转//
+25
+rotateEnable:true,//可手动旋转//
+26
+ruler:false,
+27
+ // 隐藏默认楼块
+28
+        features: ['bg', 'road', 'point'],
+29
+        mapStyle: 'amap://styles/light',
+30
+        layers: [
+31
+            // 高德默认标准图层
+32
+            new AMap.TileLayer.Satellite(),
+33
+            // 楼块图层
+34
+            new AMap.Buildings({
+35
+                zooms: [16, 18],
+36
+                zIndex: 10,
+37
+                heightFactor: 2//2倍于默认高度，3D下有效
+38
+            })
+39
+        ],
+40
+​
+41
+mapStyle:'amap://styles/74f36047236b4063ce8b9afaadfe1a33//自定义地图样式//'
+42
+});
+43
+​
+44
+</script>
+45
+<style type="text/css">
+@ecvv2013
+Commit changes
+Commit summary
+Create amap2.html
+Optional extended description
+Add an optional extended description…
+ Commit directly to the main branch.
+ Create a new branch for this commit and start a pull request. Learn more about pull requests.
+ 
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
