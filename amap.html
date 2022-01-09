@@ -1,0 +1,69 @@
+﻿//loading...//
+
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+<title>自定义地图</title>
+
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=	7c7ea04aeabfb8eb84b57a2b7088f3aa"//我的KEY值，不含"//>
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container"></div>
+
+
+<script>
+
+var map = new AMap.Map('container', {
+
+resizeEnable: true,//左右上下可拖动//
+
+zoom:17,//层级//
+
+zooms:[17,20],//最高和最低层级//
+
+center: [112.976271,28.196223],//中心坐标点//
+
+pitch:61,//倾斜//
+
+pitchEnable:false,//不可手动倾斜//
+
+viewMode:'3D',//3D样式//
+
+rotation:35,//旋转//
+
+rotateEnable:true,//可手动旋转//
+ruler:false,
+
+mapStyle:'amap://styles/74f36047236b4063ce8b9afaadfe1a33//自定义地图样式//'
+
+});
+
+</script>
+
+<style type="text/css">
+
+.amap-logo,
+
+.amap-copyright { display:none !important; }//去水印//
+
+</style>
+
+</body>
+
+
+</html>
