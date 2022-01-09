@@ -1,0 +1,67 @@
+﻿//背景地图-AXURE//
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+<title>自定义地图</title>
+<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+ //实时路况图层按钮样式
+<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+ //实时路况图层按钮样式结束
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=	7c7ea04aeabfb8eb84b57a2b7088f3aa"//我的KEY值，不含"//>
+</script>
+</head>
+<body>
+<div id="container"></div>
+<div class="input-card" style="width: auto;">
+    <div class="input-item">
+        <button class="btn" onclick="toggle()">路况</button>
+    </div>
+</div>
+<script>
+var map = new AMap.Map('container', {
+resizeEnable: true,//左右上下可拖动//
+zoom:15.9,//层级//
+zooms:[15.9,20],//最高和最低层级//
+center: [112.976271,28.196223],//中心坐标点//
+pitch:60,//倾斜//
+pitchEnable:false,//不可手动倾斜//
+viewMode:'3D',//3D样式//
+rotation:35,//旋转//
+rotateEnable:true,//可手动旋转//
+ruler:false,
+//卫星
+layers: [new AMap.TileLayer.Satellite()],
+//卫星
+mapStyle:'amap://styles/74f36047236b4063ce8b9afaadfe1a33//自定义地图样式//'
+});
+
+ //实时路况图层
+    var trafficLayer = new AMap.TileLayer.Traffic({
+        zIndex: 10,
+//图层不可见（默认）
+        visible:false
+    });
+
+    trafficLayer.setMap(map);
+    var isVisible = false;
+    function toggle() {
+        if (isVisible) {
+            trafficLayer.hide();
+            isVisible = false;
+        } else {
+            trafficLayer.show();
+            isVisible = true;
+        }
+    }
+ //实时路况图层结束
+</script>
+<style type="text/css">
+.amap-logo,
+.amap-copyright { display:none !important; }//去水印//
+</style>
+</body>
+
+</html>
